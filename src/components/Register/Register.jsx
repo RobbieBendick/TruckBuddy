@@ -24,7 +24,7 @@ function Negative() {
   );
 }
 
-function Login() {
+function Register() {
   const [formStateHolder, setFormStateHolder] = useState({
     email: {
       isValid: false,
@@ -67,6 +67,38 @@ function Login() {
           e.preventDefault();
         }}
       >
+        <FormControl
+          label="Your email"
+          error={
+            shouldShowErrorEmail ? "Please input a valid email address" : null
+          }
+        >
+          <Input
+            placeholder="Enter your email"
+            id="email-input-id"
+            value={email.value}
+            onChange={(e) =>
+              setFormStateHolder({
+                ...formStateHolder,
+                email: {
+                  ...email,
+                  value: e.currentTarget.value,
+                  isValid: validateEmail(e.currentTarget.value),
+                },
+              })
+            }
+            onBlur={() =>
+              setFormStateHolder({
+                ...formStateHolder,
+                email: { ...email, isVisited: true },
+              })
+            }
+            error={shouldShowErrorEmail}
+            overrides={shouldShowErrorEmail ? { After: Negative } : {}}
+            type="email"
+            required
+          />
+        </FormControl>
         <FormControl label="Your username">
           <Input
             placeholder="Enter your username"
@@ -117,4 +149,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
